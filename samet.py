@@ -115,8 +115,8 @@ if st.session_state.grafikler_tiklandi_mi:
                 st.pyplot(plt)
 
     if st.sidebar.button('Genel İstatistikler', key='section6'):
-        st.subheader('Grafik 2 İçeriği')
-        st.write('Grafik 2 Açıklama ve İçerikleri Burada')
+        st.subheader('')
+        st.write('')
         
         #Grafik1
         st.set_option('deprecation.showPyplotGlobalUse', False)
