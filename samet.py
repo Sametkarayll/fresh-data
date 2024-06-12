@@ -7,7 +7,7 @@ import seaborn as sns
 excel_path = "bilisim23.xlsx"
 data = pd.read_excel(excel_path)
 df = pd.DataFrame(data)
-
+df=df.drop(columns=["Unnamed: 0.1","Unnamed: 0"])
 # CSS Stili
 st.markdown(
     """
@@ -206,16 +206,19 @@ if st.session_state.grafikler_tiklandi_mi:
 if st.sidebar.button('Hakkımızda', key='section3'):
     st.write("Mehmet Hanifi Işık")
     st.write("Github: https://github.com/MehmetHanifi1")
-    st.write("Linkedin: ")
+    st.write("Linkedin:https://www.linkedin.com/in/hanifi-i%C5%9F%C4%B1k-0416bb291/ ")
+    
     st.write("Abdulsamet Karayel")
-    st.write("Github: https://github.com/")
-    st.write("Linkedin: ")
+    st.write("Github: https://github.com/SametKarayl23")
+    st.write("Linkedin:https://www.linkedin.com/in/samet-i%C5%9F%C4%B1k-0536bb291/ ")
+    
     st.write("Esra Sena Karaaslan")
-    st.write("Github: https://github.com/")
-    st.write("Linkedin: ")
+    st.write("Github: https://github.com/SenaKaraslan44")
+    st.write("Linkedin:https://www.linkedin.com/in/esra-i%C5%9F%C4%B1k-4456bb291/")
+    
     st.write("Reyyan Erva Gökkaya")
-    st.write("Github: https://github.com/")
-    st.write("Linkedin: ")
+    st.write("Github: https://github.com/Reyyanerva01")
+    st.write("Linkedin:https://www.linkedin.com/in/reyyan-i%C5%9F%C4%B1k-0416bb291/")
 
 if st.sidebar.button('Veriler', key='section4'):
     st.write('Veriler')
