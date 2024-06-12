@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Excel dosyasını yükle
-excel_path = "/Users/sametkarayel/Desktop/bilisim.xlsx"
+excel_path = "bilisim23.xlsx"
 data = pd.read_excel(excel_path)
 df = pd.DataFrame(data)
 
