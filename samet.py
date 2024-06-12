@@ -114,7 +114,7 @@ if st.session_state.grafikler_tiklandi_mi:
                 plt.xticks(rotation=45)
                 st.pyplot(plt)
 
-    if st.sidebar.button('Genel Grafik', key='section6'):
+    if st.sidebar.button('Genel İstatistikler', key='section6'):
         st.subheader('Grafik 2 İçeriği')
         st.write('Grafik 2 Açıklama ve İçerikleri Burada')
         
