@@ -73,8 +73,8 @@ if st.session_state.grafikler_tiklandi_mi:
         st.session_state.bireysel_grafik_tiklandi_mi = not st.session_state.bireysel_grafik_tiklandi_mi
 
     if st.session_state.bireysel_grafik_tiklandi_mi:
-        st.subheader('Bireysel Grafik İçeriği')
-        st.write('Bireysel Grafik Açıklama ve İçerikleri Burada')
+        st.subheader('')
+        st.write('')
 
         # Kullanıcıdan meslek girişi al
         input_pozisyon_bireysel = st.text_input("Bireysel grafik oluşturmak istediğiniz mesleği giriniz: ")
