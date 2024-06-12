@@ -69,7 +69,7 @@ if st.sidebar.button('Grafikler', key='section2'):
 
 # Eğer Grafikler butonuna tıklandıysa, Grafik 1 ve Grafik 2 butonlarını göster
 if st.session_state.grafikler_tiklandi_mi:
-    if st.sidebar.button('Bireysel Grafik', key='section5'):
+    if st.sidebar.button('Meslek İstatistikleri', key='section5'):
         st.session_state.bireysel_grafik_tiklandi_mi = not st.session_state.bireysel_grafik_tiklandi_mi
 
     if st.session_state.bireysel_grafik_tiklandi_mi:
