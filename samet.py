@@ -4,11 +4,10 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Excel dosyasını yükle
-excel_path = "/Users/sametkarayel/Desktop/bilisim23.xlsx"
+excel_path = "bilisim23.xlsx"
 data = pd.read_excel(excel_path)
 df = pd.DataFrame(data)
-df = df.drop(columns=["Unnamed: 0.1", "Unnamed: 0"])
-
+df=df.drop(columns=["Unnamed: 0.1","Unnamed: 0"])
 # CSS Stili
 st.markdown(
     """
@@ -74,54 +73,52 @@ if st.session_state.grafikler_tiklandi_mi:
         st.session_state.bireysel_grafik_tiklandi_mi = not st.session_state.bireysel_grafik_tiklandi_mi
 
     if st.session_state.bireysel_grafik_tiklandi_mi:
-        st.title('Meslek İstatistikleri')
+        st.subheader('')
+        st.write('')
 
-        # Meslek seçim kutusu
-        selected_job = st.selectbox("Lütfen bir meslek seçin:", df['Pozisyon'].unique())
+        # Kullanıcıdan meslek girişi al
+        input_pozisyon_bireysel = st.text_input("Bireysel grafik oluşturmak istediğiniz mesleği giriniz: ")
 
-        if selected_job:
-            # Belirtilen pozisyona göre filtreleme
-            df_filtered = df[df['Pozisyon'] == selected_job]
+        # Belirtilen pozisyona göre filtreleme
+        df_filtered_bireysel = df[df['Pozisyon'] == input_pozisyon_bireysel]
 
-            if df_filtered.empty:
-                st.write(f"{selected_job} pozisyonu için veri bulunamadı.")
-            else:
-                # Tarihe göre sayıları almak
-                yearly_counts = df_filtered['Tarih'].value_counts().sort_index()
+        if df_filtered_bireysel.empty:
+            st.write(f"{input_pozisyon_bireysel} pozisyonu için veri bulunamadı.")
+        else:
+            # Tarihe göre sayıları almak
+            yearly_counts_bireysel = df_filtered_bireysel['Tarih'].value_counts().sort_index()
 
-                # Çalışma şekillerini almak
-                working_style_counts = df_filtered['Calisma Sekli'].value_counts()
+            # Çalışma şekillerini almak
+            working_style_counts_bireysel = df_filtered_bireysel['Calisma Sekli'].value_counts()
 
-                # Grafikleri çizme
-                col1, col2 = st.columns(2)
+            # Grafikleri çizme
+            col1_bireysel, col2_bireysel = st.columns(2)
 
-                # Yıllık sayılar grafiği
-                with col1:
-                    st.set_option('deprecation.showPyplotGlobalUse', False)
-                    st.subheader('Pozisyonun Yıllara Göre Sayı Grafiği')
-                    plt.figure(figsize=(10, 6))
-                    sns.barplot(x=yearly_counts.index, y=yearly_counts.values, palette='viridis')
-                    plt.xlabel('Yıl')
-                    plt.ylabel('Sayı')
-                    plt.title('Pozisyonun Yıllara Göre Sayı Grafiği', loc='right', fontsize=14)
-                    st.pyplot()
+            # Yıllık sayılar grafiği
+            with col1_bireysel:
+                st.subheader(f'{input_pozisyon_bireysel} Pozisyonunun Yıllara Göre Sayısı')
+                plt.figure(figsize=(10, 6))
+                sns.barplot(x=yearly_counts_bireysel.index, y=yearly_counts_bireysel.values, palette='viridis')
+                plt.xlabel('Yıl')
+                plt.ylabel('Sayı')
+                plt.xticks(rotation=45)
+                st.pyplot(plt)
 
-                # Çalışma şekilleri grafiği
-                with col2:
-                    st.set_option('deprecation.showPyplotGlobalUse', False)
-                    st.subheader('Pozisyonun Çalışma Şekli Grafiği')
-                    plt.figure(figsize=(10, 6))
-                    sns.barplot(x=working_style_counts.index, y=working_style_counts.values, palette='viridis')
-                    plt.xlabel('Çalışma Şekli')
-                    plt.ylabel('Sayı')
-                    plt.title('Pozisyonun Çalışma Şekli Grafiği', loc='right', fontsize=14)
-                    st.pyplot()
+            # Çalışma şekilleri grafiği
+            with col2_bireysel:
+                st.subheader(f'{input_pozisyon_bireysel} Pozisyonunun Çalışma Şekilleri')
+                plt.figure(figsize=(10, 6))
+                sns.barplot(x=working_style_counts_bireysel.index, y=working_style_counts_bireysel.values, palette='viridis')
+                plt.xlabel('Çalışma Şekli')
+                plt.ylabel('Sayı')
+                plt.xticks(rotation=45)
+                st.pyplot(plt)
 
     if st.sidebar.button('Genel İstatistikler', key='section6'):
         st.subheader('')
         st.write('')
-
-        # Grafik 1
+        
+        #Grafik1
         st.set_option('deprecation.showPyplotGlobalUse', False)
         pozisyon_sayim = df['Pozisyon'].value_counts().head(10).reset_index()
         pozisyon_sayim.columns = ['Pozisyon', 'Sayım']
@@ -137,8 +134,8 @@ if st.session_state.grafikler_tiklandi_mi:
         plt.legend(title='Pozisyon', loc='upper right')
         st.title('Konuma Göre En Çok Bulunan 10 Pozisyon')
         st.pyplot(plt)
-
-        # Grafik 2
+        
+        #Grafik2
         st.set_option('deprecation.showPyplotGlobalUse', False)
         pozisyon_sayim = df['Pozisyon'].value_counts().head(3).reset_index()
         pozisyon_sayim.columns = ['Pozisyon', 'Sayım']
@@ -158,7 +155,7 @@ if st.session_state.grafikler_tiklandi_mi:
         st.title('Pozisyonlara Göre Konum Dağılımları')
         st.pyplot(plt)
 
-        # Grafik 3
+        #Grafik3
         st.set_option('deprecation.showPyplotGlobalUse', False)
         meslekler = df['Pozisyon'].value_counts().head(10).index.tolist()
         plt.figure(figsize=(14, 8))
@@ -178,7 +175,7 @@ if st.session_state.grafikler_tiklandi_mi:
         st.title('Öne Çıkan Mesleklerin Yıllara Göre Dağılımı')
         st.pyplot(plt)
 
-        # Grafik 4
+        #Grafik4
         st.set_option('deprecation.showPyplotGlobalUse', False)
         top_10_meslek = df['Pozisyon'].value_counts().head(10)
         fig, ax = plt.subplots(figsize=(10, 6))
@@ -191,34 +188,38 @@ if st.session_state.grafikler_tiklandi_mi:
         st.title('Öne Çıkan Mesleklerin Dağılımı')
         st.pyplot(fig)
 
-        # Grafik 5
+        #Grafik5
         st.set_option('deprecation.showPyplotGlobalUse', False)
-        top_10_meslek = df['Pozisyon'].value_counts().head(10)
-        fig, ax = plt.subplots(figsize=(10, 6))
-        plt.pie(top_10_meslek, labels=top_10_meslek.index, autopct='%1.1f%%', colors=sns.color_palette('Set3', len(top_10_meslek)))
-        plt.title('En Popüler 10 Mesleğin Dağılımı')
-        plt.tight_layout()
-        st.title('En Popüler 10 Mesleğin Dağılımı')
-        st.pyplot(fig)
+        top_10_meslek = df['Pozisyon'].value_counts().head(10).index.tolist()
+        filtered_df = df[df['Pozisyon'].isin(top_10_meslek)]
+        meslekler_konum = filtered_df.groupby('Pozisyon')['Konum'].value_counts().unstack().fillna(0)
+        st.title('En Çok Tekrar Eden 10 Mesleğin Konuma Göre Dağılımı')
+        st.bar_chart(meslekler_konum)
+
+        #Grafik6
+        top_10_meslek = df['Pozisyon'].value_counts().head(10).index.tolist()
+        filtered_df = df[df['Pozisyon'].isin(top_10_meslek)]
+        meslekler_calisma_sekli = filtered_df.groupby('Pozisyon')['Calisma Sekli'].value_counts().unstack().fillna(0)
+        st.title('Öne Çıkan Mesleklerin Çalışma Şekline Göre Dağılımı')
+        st.bar_chart(meslekler_calisma_sekli)
 
 if st.sidebar.button('Hakkımızda', key='section3'):
     st.write("Mehmet Hanifi Işık")
     st.write("Github: https://github.com/MehmetHanifi1")
-    st.write("Linkedin: https://www.linkedin.com/in/hanifi-i%C5%9F%C4%B1k-0416bb291/ ")
-
+    st.write("Linkedin:https://www.linkedin.com/in/hanifi-i%C5%9F%C4%B1k-0416bb291/ ")
+    
     st.write("Abdulsamet Karayel")
     st.write("Github: https://github.com/SametKarayl23")
-    st.write("Linkedin: https://www.linkedin.com/in/samet-i%C5%9F%C4%B1k-0536bb291/ ")
-
+    st.write("Linkedin:https://www.linkedin.com/in/samet-i%C5%9F%C4%B1k-0536bb291/ ")
+    
     st.write("Esra Sena Karaaslan")
     st.write("Github: https://github.com/SenaKaraslan44")
-    st.write("Linkedin: https://www.linkedin.com/in/esra-i%C5%9F%C4%B1k-4456bb291/")
-
+    st.write("Linkedin:https://www.linkedin.com/in/esra-i%C5%9F%C4%B1k-4456bb291/")
+    
     st.write("Reyyan Erva Gökkaya")
     st.write("Github: https://github.com/Reyyanerva01")
-    st.write("Linkedin: https://www.linkedin.com/in/reyyan-i%C5%9F%C4%B1k-0416bb291/")
+    st.write("Linkedin:https://www.linkedin.com/in/reyyan-i%C5%9F%C4%B1k-0416bb291/")
 
 if st.sidebar.button('Veriler', key='section4'):
     st.write('Veriler')
     st.write(df.head(2460))
-
